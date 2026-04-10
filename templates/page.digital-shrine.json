@@ -1,0 +1,109 @@
+{
+  "sections": {
+    "digital_shrine": {
+      "type": "pf-digital-shrine",
+      "blocks": {
+        "feature_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "🖼",
+            "tag": "Memory Wall",
+            "title": "照片 · 视频墙",
+            "desc": "无限上传照片与视频，按时间线排列，将每一个珍贵瞬间永久珍藏在专属空间里。",
+            "coming_soon": false
+          }
+        },
+        "feature_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "✍️",
+            "tag": "Message Board",
+            "title": "祈愿留言板",
+            "desc": "家人朋友可以留下文字、照片，共同编织那段温柔的记忆，让思念不再孤独。",
+            "coming_soon": false
+          }
+        },
+        "feature_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "🕯",
+            "tag": "Virtual Incense",
+            "title": "虚拟上香",
+            "desc": "点燃一炷虚拟心香，以最传统的方式表达追思。每一次点燃，都是一次跨越时空的问候。",
+            "coming_soon": true
+          }
+        },
+        "feature_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "👣",
+            "tag": "Visitor Log",
+            "title": "访客足迹",
+            "desc": "记录每一位来探望的人，看见那些因它而相聚的爱，感受从未消逝的温暖联结。",
+            "coming_soon": true
+          }
+        },
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "title": "填写毛孩子信息",
+            "desc": "填写名字、生卒年月，上传一张最喜欢的照片作为祠堂封面。"
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "title": "选择祠堂风格",
+            "desc": "简约白、中式雅、花园绿——三种风格，选择最符合它性格的那一种。"
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "title": "获得专属链接",
+            "desc": "祠堂创建后获得唯一链接，随时分享给家人朋友，一同前来缅怀。"
+          }
+        },
+        "plan_free": {
+          "type": "plan",
+          "settings": {
+            "label": "基础版",
+            "name": "永久纪念",
+            "price": "免费",
+            "price_note": "永久有效",
+            "featured": false,
+            "feat_1": "专属祠堂页面",
+            "feat_2": "上传最多 20 张照片",
+            "feat_3": "留言板功能",
+            "feat_4": "专属分享链接",
+            "feat_off_1": "虚拟上香",
+            "feat_off_2": "访客足迹记录"
+          }
+        },
+        "plan_premium": {
+          "type": "plan",
+          "settings": {
+            "label": "永久版",
+            "name": "圆满纪念",
+            "price": "$19",
+            "price_note": "一次性 · 永久有效",
+            "featured": true,
+            "feat_1": "专属祠堂页面",
+            "feat_2": "无限上传照片 & 视频",
+            "feat_3": "留言板 + 虚拟上香",
+            "feat_4": "访客足迹记录",
+            "feat_off_1": "",
+            "feat_off_2": ""
+          }
+        }
+      },
+      "block_order": [
+        "feature_1", "feature_2", "feature_3", "feature_4",
+        "step_1", "step_2", "step_3",
+        "plan_free", "plan_premium"
+      ],
+      "settings": {}
+    }
+  },
+  "order": ["digital_shrine"]
+}
