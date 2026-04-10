@@ -1,0 +1,257 @@
+{% comment %}
+  PetFarewell - Services Strip Section (Bilingual)
+{% endcomment %}
+
+{% liquid
+  assign is_zh = false
+  if request.locale.iso_code == 'zh-CN' or request.locale.iso_code == 'zh-TW'
+    assign is_zh = true
+  endif
+%}
+
+<style>
+  .pf-services-strip {
+    background-color: {{ section.settings.background_color }};
+    border-top: 1px solid rgba(0,0,0,0.06);
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .pf-services-strip__inner {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: {{ section.settings.padding_top }}px 2rem {{ section.settings.padding_bottom }}px;
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size }}, 1fr);
+    gap: 0;
+  }
+  .pf-services-strip__item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    position: relative;
+  }
+  .pf-services-strip__item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: rgba(0,0,0,0.1);
+  }
+  .pf-services-strip__icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: {{ section.settings.icon_color }};
+  }
+  .pf-services-strip__icon svg { width: 36px; height: 36px; }
+  .pf-services-strip__title {
+    font-family: var(--font-heading--family);
+    font-size: 1rem;
+    font-weight: 600;
+    color: {{ section.settings.title_color }};
+    margin: 0 0 0.2rem;
+    line-height: 1.3;
+  }
+  .pf-services-strip__desc {
+    font-size: 0.85rem;
+    color: {{ section.settings.desc_color }};
+    margin: 0;
+    line-height: 1.4;
+  }
+  @media (max-width: 768px) {
+    .pf-services-strip__inner {
+      grid-template-columns: 1fr;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    .pf-services-strip__item:not(:last-child)::after {
+      top: auto; bottom: 0; right: 5%; width: 90%; height: 1px;
+    }
+    .pf-services-strip__item { padding: 1.2rem 1rem; }
+  }
+</style>
+
+<section class="pf-services-strip">
+  <div class="pf-services-strip__inner">
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'service_item' %}
+          {% liquid
+            if is_zh
+              assign item_title = block.settings.title_zh | default: block.settings.title
+              assign item_desc  = block.settings.description_zh | default: block.settings.description
+            else
+              assign item_title = block.settings.title
+              assign item_desc  = block.settings.description
+            endif
+          %}
+          <div class="pf-services-strip__item" {{ block.shopify_attributes }}>
+            <div class="pf-services-strip__icon">
+              {% case block.settings.icon %}
+                {% when 'shipping' %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/>
+                  </svg>
+                {% when 'flame' %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z"/>
+                    <path d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z"/>
+                  </svg>
+                {% when 'shrine' %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M3 12l9-9 9 9M5 10v9a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1v-9"/>
+                  </svg>
+                {% when 'heart' %}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/>
+                  </svg>
+              {% endcase %}
+            </div>
+            <div>
+              <p class="pf-services-strip__title">{{ item_title }}</p>
+              <p class="pf-services-strip__desc">{{ item_desc }}</p>
+            </div>
+          </div>
+      {% endcase %}
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Services Strip",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#F2EDE5"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#C9956A"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title Color",
+      "default": "#2B3D35"
+    },
+    {
+      "type": "color",
+      "id": "desc_color",
+      "label": "Description Color",
+      "default": "#5C5C5C"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0, "max": 80, "step": 4, "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0, "max": 80, "step": 4, "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service_item",
+      "name": "Service Item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shipping", "label": "Shipping Box" },
+            { "value": "flame",    "label": "Flame / Candle" },
+            { "value": "shrine",   "label": "Shrine / Home" },
+            { "value": "heart",    "label": "Heart" }
+          ],
+          "default": "heart"
+        },
+        {
+          "type": "header",
+          "content": "English"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title (EN)",
+          "default": "Service"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description (EN)",
+          "default": "Service description"
+        },
+        {
+          "type": "header",
+          "content": "中文"
+        },
+        {
+          "type": "text",
+          "id": "title_zh",
+          "label": "标题（中文）"
+        },
+        {
+          "type": "text",
+          "id": "description_zh",
+          "label": "描述（中文）"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Services Strip",
+      "blocks": [
+        {
+          "type": "service_item",
+          "settings": {
+            "icon": "shipping",
+            "title": "Worldwide Shipping",
+            "description": "Carefully packaged and safely delivered",
+            "title_zh": "全球配送",
+            "description_zh": "精心包装，安全送达您手中"
+          }
+        },
+        {
+          "type": "service_item",
+          "settings": {
+            "icon": "flame",
+            "title": "Paper Burning Service",
+            "description": "Professional ceremony by our team",
+            "title_zh": "纸钱代烧",
+            "description_zh": "专业法师主持，心诚则灵"
+          }
+        },
+        {
+          "type": "service_item",
+          "settings": {
+            "icon": "shrine",
+            "title": "Digital Memorial",
+            "description": "Always online, always remembered",
+            "title_zh": "电子祠堂",
+            "description_zh": "永久在线，随时寄托思念"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

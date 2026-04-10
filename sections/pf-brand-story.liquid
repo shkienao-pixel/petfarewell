@@ -1,0 +1,279 @@
+{% comment %}
+  PetFarewell - Brand Story Section (Bilingual)
+{% endcomment %}
+
+{% liquid
+  assign is_zh = false
+  if request.locale.iso_code == 'zh-CN' or request.locale.iso_code == 'zh-TW'
+    assign is_zh = true
+  endif
+  if is_zh
+    assign eyebrow  = section.settings.eyebrow_zh  | default: section.settings.eyebrow
+    assign heading  = section.settings.heading_zh  | default: section.settings.heading
+    assign body     = section.settings.body_zh     | default: section.settings.body
+    assign cta_label = section.settings.cta_label_zh | default: section.settings.cta_label
+  else
+    assign eyebrow   = section.settings.eyebrow
+    assign heading   = section.settings.heading
+    assign body      = section.settings.body
+    assign cta_label = section.settings.cta_label
+  endif
+%}
+
+<style>
+  .pf-brand-story {
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  .pf-brand-story__inner {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+  .pf-brand-story__inner--reverse { direction: rtl; }
+  .pf-brand-story__inner--reverse > * { direction: ltr; }
+  .pf-brand-story__image {
+    position: relative;
+    overflow: hidden;
+    border-radius: {{ section.settings.image_radius }}px;
+  }
+  .pf-brand-story__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    aspect-ratio: {{ section.settings.image_ratio }};
+  }
+  .pf-brand-story__image-placeholder {
+    aspect-ratio: {{ section.settings.image_ratio }};
+    background: #E8D9C8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #C8B9A8;
+    font-size: 4rem;
+  }
+  .pf-brand-story__eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }};
+    margin: 0 0 1rem;
+  }
+  .pf-brand-story__heading {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    line-height: 1.2;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 1.5rem;
+  }
+  .pf-brand-story__body {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: {{ section.settings.text_color }};
+    margin: 0 0 2rem;
+  }
+  .pf-brand-story__body p { margin: 0 0 1rem; }
+  .pf-brand-story__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: {{ section.settings.accent_color }};
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-bottom: 1.5px solid {{ section.settings.accent_color }};
+    padding-bottom: 2px;
+    transition: opacity 0.2s;
+  }
+  .pf-brand-story__cta:hover { opacity: 0.75; }
+  @media (max-width: 900px) {
+    .pf-brand-story__inner { grid-template-columns: 1fr; gap: 2.5rem; direction: ltr !important; }
+    .pf-brand-story__inner > * { direction: ltr !important; }
+  }
+</style>
+
+<section class="pf-brand-story">
+  <div class="pf-brand-story__inner {% if section.settings.image_position == 'right' %}pf-brand-story__inner--reverse{% endif %}">
+    <div class="pf-brand-story__image">
+      {% if section.settings.image != blank %}
+        <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image.alt | escape }}" width="800" loading="lazy">
+      {% else %}
+        <div class="pf-brand-story__image-placeholder">🐾</div>
+      {% endif %}
+    </div>
+    <div class="pf-brand-story__content">
+      {% if eyebrow != blank %}<p class="pf-brand-story__eyebrow">{{ eyebrow }}</p>{% endif %}
+      {% if heading != blank %}<h2 class="pf-brand-story__heading">{{ heading }}</h2>{% endif %}
+      {% if body != blank %}<div class="pf-brand-story__body">{{ body }}</div>{% endif %}
+      {% if cta_label != blank and section.settings.cta_link != blank %}
+        <a href="{{ section.settings.cta_link }}" class="pf-brand-story__cta">
+          {{ cta_label }}
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Brand Story",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image Position",
+      "options": [
+        { "value": "left",  "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image Ratio",
+      "options": [
+        { "value": "4/3",  "label": "4:3" },
+        { "value": "3/4",  "label": "3:4 Portrait" },
+        { "value": "1/1",  "label": "Square" },
+        { "value": "16/9", "label": "16:9" }
+      ],
+      "default": "4/3"
+    },
+    {
+      "type": "range",
+      "id": "image_radius",
+      "min": 0, "max": 24, "step": 2, "unit": "px",
+      "label": "Image Corner Radius",
+      "default": 8
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "English Content"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow (EN)",
+      "default": "Our Story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (EN)",
+      "default": "A Loving Farewell for Your Beloved Pet"
+    },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body (EN)",
+      "default": "<p>We understand that losing a pet is losing a family member. PetFarewell was born from a deep respect for the bond between humans and their animal companions.</p><p>Every product we offer is chosen with care — to help you honor their memory with dignity, warmth, and love.</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "Button Label (EN)",
+      "default": "Learn Our Story"
+    },
+    {
+      "type": "header",
+      "content": "中文内容"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_zh",
+      "label": "眉标题（中文）",
+      "default": "我们的故事"
+    },
+    {
+      "type": "text",
+      "id": "heading_zh",
+      "label": "标题（中文）",
+      "default": "用爱守护，让思念永存"
+    },
+    {
+      "type": "richtext",
+      "id": "body_zh",
+      "label": "正文（中文）",
+      "default": "<p>失去宠物，是失去了家人。PetFarewell 诞生于对人与动物之间深厚情感的尊重。</p><p>我们精心挑选每一件产品——从手工蜡烛到定制相框，从传统纸钱到专属棺木。每一件都承载着告别的仪式感，也承载着那份永不消逝的爱。</p>"
+    },
+    {
+      "type": "text",
+      "id": "cta_label_zh",
+      "label": "按钮文字（中文）",
+      "default": "了解我们"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FAF6EF"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#C9956A"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#2B3D35"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body Text Color",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0, "max": 120, "step": 8, "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0, "max": 120, "step": 8, "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Story"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,360 @@
+{% comment %}
+  PetFarewell - Testimonials Section (Bilingual)
+{% endcomment %}
+
+{% liquid
+  assign is_zh = false
+  if request.locale.iso_code == 'zh-CN' or request.locale.iso_code == 'zh-TW'
+    assign is_zh = true
+  endif
+  if is_zh
+    assign eyebrow = section.settings.eyebrow_zh | default: section.settings.eyebrow
+    assign heading = section.settings.heading_zh | default: section.settings.heading
+  else
+    assign eyebrow = section.settings.eyebrow
+    assign heading = section.settings.heading
+  endif
+%}
+
+<style>
+  .pf-testimonials {
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+  }
+  .pf-testimonials__inner {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  .pf-testimonials__header {
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto 3.5rem;
+  }
+  .pf-testimonials__eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }};
+    margin: 0 0 0.8rem;
+  }
+  .pf-testimonials__heading {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: {{ section.settings.heading_color }};
+    margin: 0;
+    line-height: 1.2;
+  }
+  .pf-testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .pf-testimonials__card {
+    background: {{ section.settings.card_background }};
+    border-radius: 12px;
+    padding: 2rem;
+  }
+  .pf-testimonials__stars {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 1rem;
+    color: {{ section.settings.star_color }};
+  }
+  .pf-testimonials__stars svg { width: 18px; height: 18px; }
+  .pf-testimonials__quote {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: {{ section.settings.quote_color }};
+    margin: 0 0 1.5rem;
+    font-style: italic;
+  }
+  .pf-testimonials__author { display: flex; align-items: center; gap: 0.8rem; }
+  .pf-testimonials__avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: {{ section.settings.accent_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FAF6EF;
+    font-family: var(--font-heading--family);
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .pf-testimonials__avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .pf-testimonials__author-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 0.1rem;
+  }
+  .pf-testimonials__author-pet {
+    font-size: 0.8rem;
+    color: {{ section.settings.accent_color }};
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    .pf-testimonials__grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<section class="pf-testimonials">
+  <div class="pf-testimonials__inner">
+    <div class="pf-testimonials__header">
+      {% if eyebrow != blank %}<p class="pf-testimonials__eyebrow">{{ eyebrow }}</p>{% endif %}
+      {% if heading != blank %}<h2 class="pf-testimonials__heading">{{ heading }}</h2>{% endif %}
+    </div>
+    <div class="pf-testimonials__grid">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'testimonial' %}
+            {% liquid
+              if is_zh
+                assign t_quote = block.settings.quote_zh | default: block.settings.quote
+                assign t_name  = block.settings.author_name_zh | default: block.settings.author_name
+                assign t_pet   = block.settings.pet_name_zh | default: block.settings.pet_name
+              else
+                assign t_quote = block.settings.quote
+                assign t_name  = block.settings.author_name
+                assign t_pet   = block.settings.pet_name
+              endif
+            %}
+            <div class="pf-testimonials__card" {{ block.shopify_attributes }}>
+              <div class="pf-testimonials__stars">
+                {% assign star_count = block.settings.rating | default: 5 %}
+                {% for i in (1..star_count) %}
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
+                {% endfor %}
+              </div>
+              {% if t_quote != blank %}
+                <p class="pf-testimonials__quote">"{{ t_quote }}"</p>
+              {% endif %}
+              <div class="pf-testimonials__author">
+                <div class="pf-testimonials__avatar">
+                  {% if block.settings.avatar != blank %}
+                    <img src="{{ block.settings.avatar | image_url: width: 88 }}" alt="{{ t_name }}">
+                  {% else %}
+                    {{ t_name | slice: 0 }}
+                  {% endif %}
+                </div>
+                <div>
+                  <p class="pf-testimonials__author-name">{{ t_name }}</p>
+                  {% if t_pet != blank %}<p class="pf-testimonials__author-pet">🐾 {{ t_pet }}</p>{% endif %}
+                </div>
+              </div>
+            </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "English"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow (EN)",
+      "default": "Reviews"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (EN)",
+      "default": "Trusted by Loving Pet Families"
+    },
+    {
+      "type": "header",
+      "content": "中文"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_zh",
+      "label": "眉标题（中文）",
+      "default": "用户评价"
+    },
+    {
+      "type": "text",
+      "id": "heading_zh",
+      "label": "标题（中文）",
+      "default": "他们的毛孩子，我们一同守护"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#FAF6EF"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card Background",
+      "default": "#F2EDE5"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star Color",
+      "default": "#C9956A"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#C9956A"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#2B3D35"
+    },
+    {
+      "type": "color",
+      "id": "quote_color",
+      "label": "Quote Text Color",
+      "default": "#4A4A4A"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0, "max": 120, "step": 8, "unit": "px",
+      "label": "Padding Top",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0, "max": 120, "step": 8, "unit": "px",
+      "label": "Padding Bottom",
+      "default": 80
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1, "max": 5, "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Author Avatar"
+        },
+        {
+          "type": "header",
+          "content": "English"
+        },
+        {
+          "type": "textarea",
+          "id": "quote",
+          "label": "Quote (EN)",
+          "default": "An incredibly thoughtful service. The care they put into every detail truly helped us through a difficult time."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Name (EN)",
+          "default": "Customer"
+        },
+        {
+          "type": "text",
+          "id": "pet_name",
+          "label": "Pet Info (EN)",
+          "info": "e.g. 'Buddy — Golden Retriever, age 9'"
+        },
+        {
+          "type": "header",
+          "content": "中文"
+        },
+        {
+          "type": "textarea",
+          "id": "quote_zh",
+          "label": "评价内容（中文）"
+        },
+        {
+          "type": "text",
+          "id": "author_name_zh",
+          "label": "姓名（中文）"
+        },
+        {
+          "type": "text",
+          "id": "pet_name_zh",
+          "label": "宠物信息（中文）",
+          "info": "例如：小橘 — 橘猫 12岁"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The candle arrived beautifully packaged with little flowers. I lit it when my cat passed — it felt like she was still here.",
+            "author_name": "Xiaoyu",
+            "pet_name": "Xiaoju — Orange Cat, 12",
+            "quote_zh": "收到蜡烛的那一刻我哭了。包装太用心了，小橘走的时候我点燃了这根蜡烛，感觉它还在身边。",
+            "author_name_zh": "小雨",
+            "pet_name_zh": "小橘 — 橘猫 12岁"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The paper burning ceremony was so professional. They sent a full video. I watched it from here and knew my dog received my love.",
+            "author_name": "Daming",
+            "pet_name": "Huang — Shiba Inu, 9",
+            "quote_zh": "代烧服务真的很专业，他们发来了整个仪式的视频，法师很认真，感觉阿黄已经收到我的心意了。",
+            "author_name_zh": "大明",
+            "pet_name_zh": "阿黄 — 柴犬 9岁"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "quote": "The digital memorial is beautiful. I visit Duoduo every day, uploaded so many photos. It feels like she never left.",
+            "author_name": "Crystal",
+            "pet_name": "Duoduo — Bichon, 7",
+            "quote_zh": "电子祠堂设计得很漂亮，我每天都会去看看多多，感觉它一直都在。谢谢PetFarewell。",
+            "author_name_zh": "Crystal",
+            "pet_name_zh": "多多 — 比熊 7岁"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

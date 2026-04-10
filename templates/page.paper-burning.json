@@ -1,0 +1,97 @@
+{
+  "sections": {
+    "paper_burning": {
+      "type": "pf-paper-burning",
+      "blocks": {
+        "service_basic": {
+          "type": "service",
+          "settings": {
+            "tier": "基础",
+            "name": "思念轻寄",
+            "price": "29",
+            "feature_1": "专人代烧仪式",
+            "feature_2": "仪式现场拍照留念",
+            "feature_3": "电子感谢证书",
+            "feature_4": "三个工作日内完成",
+            "feature_5": ""
+          }
+        },
+        "service_standard": {
+          "type": "service",
+          "settings": {
+            "tier": "标准",
+            "name": "虔诚祈愿",
+            "price": "59",
+            "feature_1": "诵经祈愿仪式",
+            "feature_2": "代烧全程视频记录",
+            "feature_3": "定制专属祈愿词",
+            "feature_4": "仪式视频文件发送",
+            "feature_5": "电子感谢证书"
+          }
+        },
+        "service_premium": {
+          "type": "service",
+          "settings": {
+            "tier": "豪华",
+            "name": "圆满送行",
+            "price": "99",
+            "feature_1": "专属仪式主持",
+            "feature_2": "仪式全程直播",
+            "feature_3": "定制供品摆设",
+            "feature_4": "实体证书 + 视频存档",
+            "feature_5": "气运护佑在世家人"
+          }
+        },
+        "location_mountain": {
+          "type": "location",
+          "settings": {
+            "icon": "⛰",
+            "name": "灵山福地",
+            "subtitle": "Mountain · 通达天界",
+            "story": "山为天地之脊，高耸入云处最近神明。道家有云：「山不在高，有仙则名。」在灵山之巅代烧，烟气随风直升云霄，引领毛孩灵魂踏上最近的归途，升入极乐，于云端俯瞰曾经相伴的人间。"
+          }
+        },
+        "location_water": {
+          "type": "location",
+          "settings": {
+            "icon": "〰",
+            "name": "碧水彼岸",
+            "subtitle": "Water · 随流归自然",
+            "story": "水为万物之源，百川终归大海。《道德经》有云：「上善若水，水善利万物而不争。」水边代烧，灰烬随流而去，如同生命回归自然的永恒循环。在无边水域中，毛孩的灵魂得到最柔软的安息。"
+          }
+        },
+        "location_qi": {
+          "type": "location",
+          "settings": {
+            "icon": "☯",
+            "name": "气运宝地",
+            "subtitle": "Qi · 阴阳交汇之所",
+            "story": "风水聚气之所，阴阳交汇之处。此地藏风纳气，是天地灵气最为充盈之所在。在此代烧，不仅为毛孩送行，更将福气与庇佑引回人间，护佑在世的家人与毛孩伴侣，延续彼此之间未断的缘分。"
+          }
+        },
+        "location_burial": {
+          "type": "location",
+          "settings": {
+            "icon": "🌿",
+            "name": "长眠伴侣",
+            "subtitle": "Burial · 永不分离",
+            "story": "形虽已逝，情义长存。将纸品随毛孩一同安葬于宁静之所，让爱与陪伴以最具体的形式延续到彼岸。土地为证，让每一份心意化为养分，守护那片它长眠的土地，生生不息，永不分离。"
+          }
+        }
+      },
+      "block_order": [
+        "service_basic",
+        "service_standard",
+        "service_premium",
+        "location_mountain",
+        "location_water",
+        "location_qi",
+        "location_burial"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "paper_burning"
+  ]
+}

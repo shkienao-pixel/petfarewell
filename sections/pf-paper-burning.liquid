@@ -1,0 +1,1381 @@
+{%- comment -%}
+  Section: pf-paper-burning.liquid
+  纸钱代烧服务模块 — 中华文化传承仪式风格
+  黑白金色调 · 庄重仪式感
+{%- endcomment -%}
+
+<style>
+/* ===================================
+   BASE
+=================================== */
+.pf-pb *,
+.pf-pb *::before,
+.pf-pb *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.pf-pb {
+  background-color: #0d0d0d;
+  color: #f5f0e8;
+  font-family: 'Noto Serif SC', 'STSong', 'Songti SC', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.pf-pb__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ===================================
+   DECORATIVE DIVIDER
+=================================== */
+.pf-pb-divider {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 56px 0;
+}
+
+.pf-pb-divider::before,
+.pf-pb-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(200, 169, 110, 0.4));
+}
+
+.pf-pb-divider::after {
+  background: linear-gradient(to left, transparent, rgba(200, 169, 110, 0.4));
+}
+
+.pf-pb-divider__glyph {
+  color: rgba(200, 169, 110, 0.7);
+  font-size: 18px;
+  flex-shrink: 0;
+  letter-spacing: 8px;
+}
+
+/* ===================================
+   MEDIA PLACEHOLDERS
+=================================== */
+.pf-pb-media {
+  position: relative;
+  background: #111;
+  overflow: hidden;
+}
+
+.pf-pb-media img,
+.pf-pb-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pf-pb-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  border: 1px dashed rgba(200, 169, 110, 0.2);
+  color: rgba(200, 169, 110, 0.35);
+}
+
+.pf-pb-placeholder__icon {
+  width: 48px;
+  height: 48px;
+  opacity: 0.5;
+}
+
+.pf-pb-placeholder__label {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* ===================================
+   OVERLINE / LABEL STYLE
+=================================== */
+.pf-pb-label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: rgba(200, 169, 110, 0.8);
+  margin-bottom: 20px;
+}
+
+/* ===================================
+   SECTION 1 — HERO
+=================================== */
+.pf-pb-hero {
+  padding: 120px 32px 80px;
+  text-align: center;
+  position: relative;
+}
+
+.pf-pb-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,169,110,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.pf-pb-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.pf-pb-hero__title {
+  font-size: clamp(40px, 7vw, 88px);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.pf-pb-hero__title-accent {
+  display: block;
+  font-size: clamp(20px, 3vw, 36px);
+  font-weight: 300;
+  color: rgba(200, 169, 110, 0.9);
+  letter-spacing: 0.15em;
+  margin-top: 8px;
+}
+
+.pf-pb-hero__rule {
+  width: 60px;
+  height: 1px;
+  background: rgba(200, 169, 110, 0.5);
+  margin: 32px auto;
+}
+
+.pf-pb-hero__lead {
+  font-size: clamp(15px, 2vw, 19px);
+  line-height: 2.2;
+  max-width: 640px;
+  margin: 0 auto 72px;
+  color: rgba(245, 240, 232, 0.72);
+  font-weight: 300;
+}
+
+.pf-pb-hero__media {
+  max-width: 960px;
+  margin: 0 auto;
+  aspect-ratio: 16/9;
+  border: 1px solid rgba(200, 169, 110, 0.2);
+}
+
+/* ===================================
+   SECTION 2 — CULTURAL ORIGIN
+=================================== */
+.pf-pb-origin {
+  padding: 0 0 80px;
+}
+
+.pf-pb-origin__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.pf-pb-origin__content {
+  padding: 0 0 0 16px;
+}
+
+.pf-pb-origin__heading {
+  font-size: clamp(26px, 3.5vw, 44px);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  margin-bottom: 32px;
+}
+
+.pf-pb-origin__heading em {
+  font-style: normal;
+  color: rgba(200, 169, 110, 0.9);
+}
+
+.pf-pb-origin__body {
+  font-size: 14px;
+  line-height: 2.3;
+  color: rgba(245, 240, 232, 0.68);
+}
+
+.pf-pb-origin__body p + p {
+  margin-top: 20px;
+}
+
+.pf-pb-origin__media {
+  aspect-ratio: 3/4;
+  border: 1px solid rgba(200, 169, 110, 0.2);
+}
+
+/* ===================================
+   SECTION 3 — STEPS NAVIGATOR
+=================================== */
+.pf-pb-steps-nav {
+  padding: 0 32px 72px;
+  text-align: center;
+}
+
+.pf-pb-steps-nav__subtitle {
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: rgba(245, 240, 232, 0.45);
+  margin-bottom: 56px;
+}
+
+.pf-pb-steps-nav__track {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 0;
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.pf-pb-steps-nav__line {
+  position: absolute;
+  top: 19px;
+  left: 16.5%;
+  right: 16.5%;
+  height: 1px;
+  background: rgba(200, 169, 110, 0.2);
+}
+
+.pf-pb-step-node {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.pf-pb-step-node__circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 169, 110, 0.35);
+  background: #0d0d0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: rgba(200, 169, 110, 0.6);
+  letter-spacing: 1px;
+}
+
+.pf-pb-step-node__text {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: rgba(245, 240, 232, 0.38);
+  text-align: center;
+}
+
+/* ===================================
+   STEP SECTION WRAPPER
+=================================== */
+.pf-pb-step-section {
+  padding: 0 32px 100px;
+}
+
+.pf-pb-step-section__header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.pf-pb-step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 10px;
+  letter-spacing: 5px;
+  color: rgba(200, 169, 110, 0.7);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.pf-pb-step-badge::before,
+.pf-pb-step-badge::after {
+  content: '';
+  width: 36px;
+  height: 1px;
+  background: rgba(200, 169, 110, 0.3);
+}
+
+.pf-pb-step-section__title {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+}
+
+.pf-pb-step-section__desc {
+  font-size: 14px;
+  line-height: 2.2;
+  color: rgba(245, 240, 232, 0.6);
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+/* ===================================
+   STEP 1 — PRODUCTS PLACEHOLDER
+=================================== */
+.pf-pb-products-slot {
+  border: 1px dashed rgba(200, 169, 110, 0.2);
+  padding: 80px 40px;
+  text-align: center;
+}
+
+.pf-pb-products-slot__glyph {
+  font-size: 32px;
+  color: rgba(200, 169, 110, 0.3);
+  margin-bottom: 20px;
+}
+
+.pf-pb-products-slot__text {
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: rgba(245, 240, 232, 0.3);
+  text-transform: uppercase;
+}
+
+/* ===================================
+   STEP 2 — SERVICE CARDS
+=================================== */
+.pf-pb-services {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(200, 169, 110, 0.08);
+}
+
+.pf-pb-service-card {
+  background: #0f0f0f;
+  padding: 48px 36px 52px;
+  cursor: pointer;
+  transition: background 0.25s, border-color 0.25s;
+  border: 2px solid transparent;
+  outline: none;
+  position: relative;
+  user-select: none;
+}
+
+.pf-pb-service-card:hover {
+  background: #141414;
+  border-color: rgba(200, 169, 110, 0.25);
+}
+
+.pf-pb-service-card.is-selected {
+  border-color: rgba(200, 169, 110, 0.8);
+  background: #13100a;
+}
+
+.pf-pb-service-card__check {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(200, 169, 110, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #c8a96e;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.pf-pb-service-card.is-selected .pf-pb-service-card__check {
+  opacity: 1;
+}
+
+.pf-pb-service-card__tier {
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: rgba(200, 169, 110, 0.65);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.pf-pb-service-card__name {
+  font-size: 24px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin-bottom: 20px;
+}
+
+.pf-pb-service-card__price {
+  font-size: 44px;
+  font-weight: 200;
+  color: rgba(245, 240, 232, 0.9);
+  margin-bottom: 32px;
+  line-height: 1;
+}
+
+.pf-pb-service-card__price-currency {
+  font-size: 18px;
+  vertical-align: top;
+  margin-top: 8px;
+  display: inline-block;
+  color: rgba(200, 169, 110, 0.7);
+}
+
+.pf-pb-service-card__rule {
+  width: 32px;
+  height: 1px;
+  background: rgba(200, 169, 110, 0.3);
+  margin-bottom: 28px;
+}
+
+.pf-pb-service-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pf-pb-service-card__features li {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(245, 240, 232, 0.62);
+  padding-left: 18px;
+  position: relative;
+}
+
+.pf-pb-service-card__features li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: rgba(200, 169, 110, 0.4);
+}
+
+/* ===================================
+   STEP 3 — LOCATION CARDS
+=================================== */
+.pf-pb-locations {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: rgba(200, 169, 110, 0.08);
+}
+
+.pf-pb-location-card {
+  background: #0f0f0f;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid transparent;
+  transition: border-color 0.25s;
+  outline: none;
+  user-select: none;
+}
+
+.pf-pb-location-card:hover {
+  border-color: rgba(200, 169, 110, 0.25);
+}
+
+.pf-pb-location-card.is-selected {
+  border-color: rgba(200, 169, 110, 0.8);
+}
+
+.pf-pb-location-card.is-selected .pf-pb-location-check {
+  opacity: 1;
+}
+
+.pf-pb-location-check {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(200, 169, 110, 0.7);
+  border-radius: 50%;
+  background: rgba(13, 13, 13, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: #c8a96e;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.pf-pb-location-card__media {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  position: relative;
+}
+
+.pf-pb-location-card__media img,
+.pf-pb-location-card__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.pf-pb-location-card:hover .pf-pb-location-card__media img,
+.pf-pb-location-card:hover .pf-pb-location-card__media video {
+  transform: scale(1.04);
+}
+
+.pf-pb-location-card__body {
+  padding: 36px 36px 40px;
+}
+
+.pf-pb-location-card__icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.pf-pb-location-card__name {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.pf-pb-location-card__subtitle {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: rgba(200, 169, 110, 0.65);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.pf-pb-location-card__rule {
+  width: 28px;
+  height: 1px;
+  background: rgba(200, 169, 110, 0.3);
+  margin-bottom: 20px;
+}
+
+.pf-pb-location-card__story {
+  font-size: 13px;
+  line-height: 2.2;
+  color: rgba(245, 240, 232, 0.58);
+}
+
+/* ===================================
+   SECTION — CTA
+=================================== */
+.pf-pb-cta {
+  padding: 80px 32px 120px;
+  text-align: center;
+  position: relative;
+}
+
+.pf-pb-cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 50% 100%, rgba(200,169,110,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.pf-pb-cta__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.pf-pb-cta__title {
+  font-size: clamp(22px, 3.5vw, 38px);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.pf-pb-cta__subtitle {
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: rgba(245, 240, 232, 0.4);
+  margin-bottom: 48px;
+}
+
+/* Selection Summary Panel */
+.pf-pb-summary {
+  display: none;
+  max-width: 420px;
+  margin: 0 auto 40px;
+  border: 1px solid rgba(200, 169, 110, 0.25);
+  background: rgba(200, 169, 110, 0.04);
+}
+
+.pf-pb-summary.is-visible {
+  display: block;
+}
+
+.pf-pb-summary__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  font-size: 12px;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.05);
+}
+
+.pf-pb-summary__row:last-child {
+  border-bottom: none;
+}
+
+.pf-pb-summary__key {
+  letter-spacing: 2px;
+  color: rgba(245, 240, 232, 0.38);
+  text-transform: uppercase;
+}
+
+.pf-pb-summary__val {
+  color: rgba(200, 169, 110, 0.85);
+  letter-spacing: 1px;
+}
+
+/* CTA Button */
+.pf-pb-btn {
+  display: inline-block;
+  padding: 18px 56px;
+  border: 1px solid rgba(200, 169, 110, 0.7);
+  color: rgba(200, 169, 110, 0.85);
+  background: transparent;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.pf-pb-btn:hover {
+  background: rgba(200, 169, 110, 0.9);
+  color: #0d0d0d;
+  border-color: rgba(200, 169, 110, 0.9);
+}
+
+/* ===================================
+   RESPONSIVE
+=================================== */
+@media (max-width: 900px) {
+  .pf-pb-origin__grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .pf-pb-origin__media {
+    order: -1;
+    aspect-ratio: 3/2;
+  }
+
+  .pf-pb-services {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .pf-pb-locations {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .pf-pb__container,
+  .pf-pb-hero,
+  .pf-pb-step-section,
+  .pf-pb-steps-nav,
+  .pf-pb-cta {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .pf-pb-hero {
+    padding-top: 80px;
+  }
+
+  .pf-pb-location-card__body {
+    padding: 24px 24px 28px;
+  }
+
+  .pf-pb-service-card {
+    padding: 36px 24px 40px;
+  }
+}
+</style>
+
+<div class="pf-pb">
+
+  {%- comment -%} ===== HERO ===== {%- endcomment -%}
+  <div class="pf-pb-hero">
+    <div class="pf-pb-hero__inner">
+      <span class="pf-pb-label">{{ section.settings.overline }}</span>
+
+      <h2 class="pf-pb-hero__title">
+        {{- section.settings.hero_title -}}
+        {%- if section.settings.hero_title_accent != blank -%}
+          <span class="pf-pb-hero__title-accent">{{ section.settings.hero_title_accent }}</span>
+        {%- endif -%}
+      </h2>
+
+      <div class="pf-pb-hero__rule"></div>
+
+      <p class="pf-pb-hero__lead">{{ section.settings.hero_lead }}</p>
+
+      <div class="pf-pb-hero__media pf-pb-media">
+        {%- if section.settings.hero_image != blank -%}
+          <img
+            src="{{ section.settings.hero_image | image_url: width: 1920 }}"
+            alt="{{ section.settings.hero_title }}"
+            loading="lazy"
+          >
+        {%- else -%}
+          <div class="pf-pb-placeholder">
+            <svg class="pf-pb-placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            <span class="pf-pb-placeholder__label">主视觉图片 / 仪式视频</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ===== DIVIDER ===== {%- endcomment -%}
+  <div class="pf-pb__container">
+    <div class="pf-pb-divider">
+      <span class="pf-pb-divider__glyph">一 ☽ 一</span>
+    </div>
+  </div>
+
+  {%- comment -%} ===== CULTURAL ORIGIN ===== {%- endcomment -%}
+  <div class="pf-pb-origin">
+    <div class="pf-pb__container">
+      <div class="pf-pb-origin__grid">
+        <div class="pf-pb-origin__content">
+          <span class="pf-pb-label">{{ section.settings.origin_label }}</span>
+          <h3 class="pf-pb-origin__heading">{{ section.settings.origin_heading }}</h3>
+          <div class="pf-pb-origin__body">
+            <p>{{ section.settings.origin_text_1 }}</p>
+            <p>{{ section.settings.origin_text_2 }}</p>
+            {%- if section.settings.origin_text_3 != blank -%}
+              <p>{{ section.settings.origin_text_3 }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="pf-pb-origin__media pf-pb-media">
+          {%- if section.settings.origin_image != blank -%}
+            <img
+              src="{{ section.settings.origin_image | image_url: width: 960 }}"
+              alt="{{ section.settings.origin_heading }}"
+              loading="lazy"
+            >
+          {%- else -%}
+            <div class="pf-pb-placeholder">
+              <svg class="pf-pb-placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+              <span class="pf-pb-placeholder__label">仪式场景图片</span>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ===== DIVIDER ===== {%- endcomment -%}
+  <div class="pf-pb__container">
+    <div class="pf-pb-divider">
+      <span class="pf-pb-divider__glyph">⊕</span>
+    </div>
+  </div>
+
+  {%- comment -%} ===== STEPS NAVIGATOR ===== {%- endcomment -%}
+  <div class="pf-pb-steps-nav">
+    <div class="pf-pb__container">
+      <span class="pf-pb-label" style="display:block;text-align:center;margin-bottom:8px;">仪式定制流程</span>
+      <p class="pf-pb-steps-nav__subtitle">{{ section.settings.steps_subtitle }}</p>
+      <div class="pf-pb-steps-nav__track">
+        <div class="pf-pb-steps-nav__line"></div>
+        <div class="pf-pb-step-node">
+          <div class="pf-pb-step-node__circle">一</div>
+          <div class="pf-pb-step-node__text">选择祭品</div>
+        </div>
+        <div class="pf-pb-step-node">
+          <div class="pf-pb-step-node__circle">二</div>
+          <div class="pf-pb-step-node__text">选择服务</div>
+        </div>
+        <div class="pf-pb-step-node">
+          <div class="pf-pb-step-node__circle">三</div>
+          <div class="pf-pb-step-node__text">选择圣地</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ===== STEP 1: PRODUCTS ===== {%- endcomment -%}
+  <div class="pf-pb-step-section" id="pf-step-1">
+    <div class="pf-pb__container">
+      <div class="pf-pb-step-section__header">
+        <div class="pf-pb-step-badge">第一步</div>
+        <h3 class="pf-pb-step-section__title">{{ section.settings.products_title }}</h3>
+        <p class="pf-pb-step-section__desc">{{ section.settings.products_desc }}</p>
+      </div>
+      <div class="pf-pb-products-slot">
+        <div class="pf-pb-products-slot__glyph">祭</div>
+        <p class="pf-pb-products-slot__text">祭品产品列表 · 即将上线</p>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ===== STEP 2: SERVICES ===== {%- endcomment -%}
+  <div class="pf-pb-step-section" id="pf-step-2">
+    <div class="pf-pb__container">
+      <div class="pf-pb-step-section__header">
+        <div class="pf-pb-step-badge">第二步</div>
+        <h3 class="pf-pb-step-section__title">{{ section.settings.services_title }}</h3>
+        <p class="pf-pb-step-section__desc">{{ section.settings.services_desc }}</p>
+      </div>
+
+      <div class="pf-pb-services" role="radiogroup" aria-label="代烧服务档位">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'service' -%}
+            <div
+              class="pf-pb-service-card"
+              role="radio"
+              aria-checked="false"
+              tabindex="0"
+              data-type="service"
+              data-name="{{ block.settings.name }}"
+              data-price="{{ block.settings.price }}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="pf-pb-service-card__check" aria-hidden="true">✓</div>
+              <p class="pf-pb-service-card__tier">{{ block.settings.tier }}</p>
+              <h4 class="pf-pb-service-card__name">{{ block.settings.name }}</h4>
+              <p class="pf-pb-service-card__price">
+                <span class="pf-pb-service-card__price-currency">$</span>{{ block.settings.price }}
+              </p>
+              <div class="pf-pb-service-card__rule"></div>
+              <ul class="pf-pb-service-card__features" aria-label="{{ block.settings.name }} 包含内容">
+                {%- if block.settings.feature_1 != blank -%}<li>{{ block.settings.feature_1 }}</li>{%- endif -%}
+                {%- if block.settings.feature_2 != blank -%}<li>{{ block.settings.feature_2 }}</li>{%- endif -%}
+                {%- if block.settings.feature_3 != blank -%}<li>{{ block.settings.feature_3 }}</li>{%- endif -%}
+                {%- if block.settings.feature_4 != blank -%}<li>{{ block.settings.feature_4 }}</li>{%- endif -%}
+                {%- if block.settings.feature_5 != blank -%}<li>{{ block.settings.feature_5 }}</li>{%- endif -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ===== STEP 3: LOCATIONS ===== {%- endcomment -%}
+  <div class="pf-pb-step-section" id="pf-step-3">
+    <div class="pf-pb__container">
+      <div class="pf-pb-step-section__header">
+        <div class="pf-pb-step-badge">第三步</div>
+        <h3 class="pf-pb-step-section__title">{{ section.settings.locations_title }}</h3>
+        <p class="pf-pb-step-section__desc">{{ section.settings.locations_desc }}</p>
+      </div>
+
+      <div class="pf-pb-locations" role="radiogroup" aria-label="送行圣地">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'location' -%}
+            <div
+              class="pf-pb-location-card"
+              role="radio"
+              aria-checked="false"
+              tabindex="0"
+              data-type="location"
+              data-name="{{ block.settings.name }}"
+              {{ block.shopify_attributes }}
+            >
+              <div class="pf-pb-location-check" aria-hidden="true">✓</div>
+
+              <div class="pf-pb-location-card__media">
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 1000 }}"
+                    alt="{{ block.settings.name }}"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  <div class="pf-pb-placeholder" style="min-height:200px">
+                    <svg class="pf-pb-placeholder__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/>
+                      <circle cx="8.5" cy="8.5" r="1.5"/>
+                      <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <span class="pf-pb-placeholder__label">{{ block.settings.name }} · 实景图片</span>
+                  </div>
+                {%- endif -%}
+              </div>
+
+              <div class="pf-pb-location-card__body">
+                <span class="pf-pb-location-card__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+                <h4 class="pf-pb-location-card__name">{{ block.settings.name }}</h4>
+                <p class="pf-pb-location-card__subtitle">{{ block.settings.subtitle }}</p>
+                <div class="pf-pb-location-card__rule"></div>
+                <p class="pf-pb-location-card__story">{{ block.settings.story }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ===== DIVIDER ===== {%- endcomment -%}
+  <div class="pf-pb__container">
+    <div class="pf-pb-divider">
+      <span class="pf-pb-divider__glyph">一 ☽ 一</span>
+    </div>
+  </div>
+
+  {%- comment -%} ===== CTA ===== {%- endcomment -%}
+  <div class="pf-pb-cta">
+    <div class="pf-pb-cta__inner">
+      <span class="pf-pb-label" style="display:block;text-align:center;margin-bottom:20px;">完成定制</span>
+      <h3 class="pf-pb-cta__title">{{ section.settings.cta_title }}</h3>
+      <p class="pf-pb-cta__subtitle">{{ section.settings.cta_subtitle }}</p>
+
+      <div class="pf-pb-summary" id="pf-pb-summary" aria-live="polite">
+        <div class="pf-pb-summary__row">
+          <span class="pf-pb-summary__key">已选服务</span>
+          <span class="pf-pb-summary__val" id="pf-summary-service">—</span>
+        </div>
+        <div class="pf-pb-summary__row">
+          <span class="pf-pb-summary__key">送行圣地</span>
+          <span class="pf-pb-summary__val" id="pf-summary-location">—</span>
+        </div>
+      </div>
+
+      <a href="{{ section.settings.cta_url }}" class="pf-pb-btn">
+        {{ section.settings.cta_button }}
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var serviceCards = Array.prototype.slice.call(document.querySelectorAll('.pf-pb-service-card'));
+  var locationCards = Array.prototype.slice.call(document.querySelectorAll('.pf-pb-location-card'));
+  var summary = document.getElementById('pf-pb-summary');
+  var summaryService = document.getElementById('pf-summary-service');
+  var summaryLocation = document.getElementById('pf-summary-location');
+
+  var state = { service: null, location: null };
+
+  function updateSummary() {
+    if (state.service || state.location) {
+      summary.classList.add('is-visible');
+      summaryService.textContent = state.service ? state.service.name + '  $' + state.service.price : '—';
+      summaryLocation.textContent = state.location ? state.location.name : '—';
+    }
+  }
+
+  function selectService(card) {
+    serviceCards.forEach(function (c) {
+      c.classList.remove('is-selected');
+      c.setAttribute('aria-checked', 'false');
+    });
+    card.classList.add('is-selected');
+    card.setAttribute('aria-checked', 'true');
+    state.service = { name: card.dataset.name, price: card.dataset.price };
+    updateSummary();
+  }
+
+  function selectLocation(card) {
+    locationCards.forEach(function (c) {
+      c.classList.remove('is-selected');
+      c.setAttribute('aria-checked', 'false');
+    });
+    card.classList.add('is-selected');
+    card.setAttribute('aria-checked', 'true');
+    state.location = { name: card.dataset.name };
+    updateSummary();
+  }
+
+  serviceCards.forEach(function (card) {
+    card.addEventListener('click', function () { selectService(card); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectService(card); }
+    });
+  });
+
+  locationCards.forEach(function (card) {
+    card.addEventListener('click', function () { selectLocation(card); });
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectLocation(card); }
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "纸钱代烧",
+  "tag": "section",
+  "class": "pf-paper-burning-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "主视觉区 Hero"
+    },
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "顶部标语",
+      "default": "传承千年的告别之礼"
+    },
+    {
+      "type": "text",
+      "id": "hero_title",
+      "label": "主标题",
+      "default": "纸钱代烧"
+    },
+    {
+      "type": "text",
+      "id": "hero_title_accent",
+      "label": "主标题副行（金色）",
+      "default": "跨越阴阳的思念"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_lead",
+      "label": "引言文字",
+      "default": "自汉代起，先人以纸作金，焚于天地之间，寄托对逝者的思念与祈愿。千年传承，这份跨越阴阳的情意，如今也为我们至爱的毛孩子延续。愿每一缕青烟，都能将您的牵挂，完好地送达彼岸。"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "主视觉图片（建议 16:9）"
+    },
+    {
+      "type": "header",
+      "content": "文化溯源"
+    },
+    {
+      "type": "text",
+      "id": "origin_label",
+      "label": "小标签",
+      "default": "文化溯源"
+    },
+    {
+      "type": "text",
+      "id": "origin_heading",
+      "label": "溯源标题",
+      "default": "一纸化千金，情意达彼岸"
+    },
+    {
+      "type": "textarea",
+      "id": "origin_text_1",
+      "label": "溯源正文（段一）",
+      "default": "纸钱之俗，源于东汉，盛于唐宋。古人相信，冥界与阳间同构，逝者在彼岸亦有所需。一张张精心折叠的纸钱，承载着家人的心意，经由火焰化为灵气，穿越阴阳两界，将爱与思念完整地送达。"
+    },
+    {
+      "type": "textarea",
+      "id": "origin_text_2",
+      "label": "溯源正文（段二）",
+      "default": "佛道两家皆有引导亡灵之法。火为媒介，烟为通道，将阳间之物转化为冥界所需。这不仅是一种仪式，更是生者向逝者表达心意的最后桥梁，是爱在时空中最庄重的延伸。"
+    },
+    {
+      "type": "textarea",
+      "id": "origin_text_3",
+      "label": "溯源正文（段三，选填）",
+      "default": "如今，这份千年传承的仪式，也为我们深爱的毛孩子而举行。它们曾以无私的爱陪伴我们，在它们离去之后，我们亦以最庄重的方式，送上这一份跨越时空的牵挂。"
+    },
+    {
+      "type": "image_picker",
+      "id": "origin_image",
+      "label": "文化溯源配图（建议 3:4 竖版）"
+    },
+    {
+      "type": "header",
+      "content": "流程步骤"
+    },
+    {
+      "type": "text",
+      "id": "steps_subtitle",
+      "label": "步骤区副标题",
+      "default": "为您的毛孩子，选择一场庄重的告别仪式"
+    },
+    {
+      "type": "header",
+      "content": "第一步 — 祭品"
+    },
+    {
+      "type": "text",
+      "id": "products_title",
+      "label": "标题",
+      "default": "选择祭品"
+    },
+    {
+      "type": "textarea",
+      "id": "products_desc",
+      "label": "说明文字",
+      "default": "纸钱、纸三文鱼、蜡烛……每一件祭品皆有其寓意。纸钱送衣食无忧，纸食物送饮食丰足，蜡烛送光明引路。请为您的毛孩子，挑选它最需要的那一份心意。"
+    },
+    {
+      "type": "header",
+      "content": "第二步 — 代烧服务"
+    },
+    {
+      "type": "text",
+      "id": "services_title",
+      "label": "标题",
+      "default": "选择代烧服务"
+    },
+    {
+      "type": "textarea",
+      "id": "services_desc",
+      "label": "说明文字",
+      "default": "仪式的庄重，源于用心的程度。从简约轻寄，到圆满送行，三种服务档位，对应不同的心意与需求。每一档，皆是一份郑重的承诺。"
+    },
+    {
+      "type": "header",
+      "content": "第三步 — 送行圣地"
+    },
+    {
+      "type": "text",
+      "id": "locations_title",
+      "label": "标题",
+      "default": "选择送行圣地"
+    },
+    {
+      "type": "textarea",
+      "id": "locations_desc",
+      "label": "说明文字",
+      "default": "中华文化相信，地气决定归处，方位影响灵途。山、水、气运、长眠——四处圣地，各有其天地灵气与文化寓意。请为您的毛孩子，选择最适合它灵魂安息的那片土地。"
+    },
+    {
+      "type": "header",
+      "content": "底部预约区 CTA"
+    },
+    {
+      "type": "text",
+      "id": "cta_title",
+      "label": "标题",
+      "default": "愿每一缕青烟，都能抵达它的身旁"
+    },
+    {
+      "type": "text",
+      "id": "cta_subtitle",
+      "label": "副标题",
+      "default": "完成选择后，我们将在三个工作日内为您的毛孩子举行仪式，并发送全程记录"
+    },
+    {
+      "type": "text",
+      "id": "cta_button",
+      "label": "按钮文字",
+      "default": "立即预约代烧仪式"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "按钮链接",
+      "default": "/pages/contact"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "服务档位",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "tier",
+          "label": "档位标签（如：基础 / 标准 / 豪华）",
+          "default": "基础"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "档位名称",
+          "default": "思念轻寄"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "价格（纯数字）",
+          "default": "29"
+        },
+        {
+          "type": "text",
+          "id": "feature_1",
+          "label": "服务内容 1",
+          "default": "专人代烧仪式"
+        },
+        {
+          "type": "text",
+          "id": "feature_2",
+          "label": "服务内容 2",
+          "default": "仪式现场拍照留念"
+        },
+        {
+          "type": "text",
+          "id": "feature_3",
+          "label": "服务内容 3",
+          "default": "电子感谢证书"
+        },
+        {
+          "type": "text",
+          "id": "feature_4",
+          "label": "服务内容 4"
+        },
+        {
+          "type": "text",
+          "id": "feature_5",
+          "label": "服务内容 5"
+        }
+      ]
+    },
+    {
+      "type": "location",
+      "name": "送行圣地",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "图标（Emoji）",
+          "default": "⛰"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "地点名称",
+          "default": "灵山福地"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "地点副标题（英文 + 寓意）",
+          "default": "Mountain · 通达天界"
+        },
+        {
+          "type": "textarea",
+          "id": "story",
+          "label": "文化故事叙述",
+          "default": "山为天地之脊，高耸入云处最近神明。道家有云：「山不在高，有仙则名。」在灵山之巅代烧，烟气随风直升云霄，引领毛孩灵魂踏上最近的归途，升入极乐，于云端俯瞰曾经相伴的人间。"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "地点图片（建议 16:9）"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "纸钱代烧",
+      "blocks": [
+        {
+          "type": "service",
+          "settings": {
+            "tier": "基础",
+            "name": "思念轻寄",
+            "price": "29",
+            "feature_1": "专人代烧仪式",
+            "feature_2": "仪式现场拍照留念",
+            "feature_3": "电子感谢证书",
+            "feature_4": "三个工作日内完成",
+            "feature_5": ""
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "tier": "标准",
+            "name": "虔诚祈愿",
+            "price": "59",
+            "feature_1": "诵经祈愿仪式",
+            "feature_2": "代烧全程视频记录",
+            "feature_3": "定制专属祈愿词",
+            "feature_4": "仪式视频文件发送",
+            "feature_5": "电子感谢证书"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "tier": "豪华",
+            "name": "圆满送行",
+            "price": "99",
+            "feature_1": "专属仪式主持",
+            "feature_2": "仪式全程直播",
+            "feature_3": "定制供品摆设",
+            "feature_4": "实体证书 + 视频存档",
+            "feature_5": "气运护佑在世家人"
+          }
+        },
+        {
+          "type": "location",
+          "settings": {
+            "icon": "⛰",
+            "name": "灵山福地",
+            "subtitle": "Mountain · 通达天界",
+            "story": "山为天地之脊，高耸入云处最近神明。道家有云：「山不在高，有仙则名。」在灵山之巅代烧，烟气随风直升云霄，引领毛孩灵魂踏上最近的归途，升入极乐，于云端俯瞰曾经相伴的人间。"
+          }
+        },
+        {
+          "type": "location",
+          "settings": {
+            "icon": "〰",
+            "name": "碧水彼岸",
+            "subtitle": "Water · 随流归自然",
+            "story": "水为万物之源，百川终归大海。《道德经》有云：「上善若水，水善利万物而不争。」水边代烧，灰烬随流而去，如同生命回归自然的永恒循环。在无边水域中，毛孩的灵魂得到最柔软的安息。"
+          }
+        },
+        {
+          "type": "location",
+          "settings": {
+            "icon": "☯",
+            "name": "气运宝地",
+            "subtitle": "Qi · 阴阳交汇之所",
+            "story": "风水聚气之所，阴阳交汇之处。此地藏风纳气，是天地灵气最为充盈之所在。在此代烧，不仅为毛孩送行，更将福气与庇佑引回人间，护佑在世的家人与毛孩伴侣，延续彼此之间未断的缘分。"
+          }
+        },
+        {
+          "type": "location",
+          "settings": {
+            "icon": "🌿",
+            "name": "长眠伴侣",
+            "subtitle": "Burial · 永不分离",
+            "story": "形虽已逝，情义长存。将纸品随毛孩一同安葬于宁静之所，让爱与陪伴以最具体的形式延续到彼岸。土地为证，让每一份心意化为养分，守护那片它长眠的土地，生生不息，永不分离。"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

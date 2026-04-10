@@ -1,0 +1,283 @@
+{% comment %}
+  PetFarewell - Newsletter CTA Section (Bilingual)
+{% endcomment %}
+
+{% liquid
+  assign is_zh = false
+  if request.locale.iso_code == 'zh-CN' or request.locale.iso_code == 'zh-TW'
+    assign is_zh = true
+  endif
+  if is_zh
+    assign eyebrow      = section.settings.eyebrow_zh      | default: section.settings.eyebrow
+    assign heading      = section.settings.heading_zh      | default: section.settings.heading
+    assign subheading   = section.settings.subheading_zh   | default: section.settings.subheading
+    assign placeholder  = section.settings.placeholder_zh  | default: section.settings.placeholder
+    assign button_label = section.settings.button_label_zh | default: section.settings.button_label
+    assign privacy_text = section.settings.privacy_text_zh | default: section.settings.privacy_text
+  else
+    assign eyebrow      = section.settings.eyebrow
+    assign heading      = section.settings.heading
+    assign subheading   = section.settings.subheading
+    assign placeholder  = section.settings.placeholder
+    assign button_label = section.settings.button_label
+    assign privacy_text = section.settings.privacy_text
+  endif
+%}
+
+<style>
+  .pf-newsletter-cta {
+    background-color: {{ section.settings.background_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    position: relative;
+    overflow: hidden;
+  }
+  .pf-newsletter-cta::before {
+    content: '🐾';
+    position: absolute;
+    font-size: 18rem;
+    opacity: 0.03;
+    right: -2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    line-height: 1;
+  }
+  .pf-newsletter-cta__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .pf-newsletter-cta__eyebrow {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: {{ section.settings.accent_color }};
+    margin: 0 0 1rem;
+  }
+  .pf-newsletter-cta__heading {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    line-height: 1.2;
+    color: {{ section.settings.heading_color }};
+    margin: 0 0 1rem;
+  }
+  .pf-newsletter-cta__subheading {
+    font-size: 1rem;
+    color: {{ section.settings.text_color }};
+    line-height: 1.7;
+    margin: 0 0 2.5rem;
+  }
+  .pf-newsletter-cta__form {
+    display: flex;
+    max-width: 480px;
+    margin: 0 auto 1rem;
+    border: 1.5px solid {{ section.settings.accent_color }};
+    border-radius: 3px;
+    overflow: hidden;
+    background: #FAF6EF;
+  }
+  .pf-newsletter-cta__input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+    color: #2C2C2C;
+    outline: none;
+    font-family: var(--font-body--family);
+  }
+  .pf-newsletter-cta__input::placeholder { color: #9A9A9A; }
+  .pf-newsletter-cta__submit {
+    background: {{ section.settings.accent_color }};
+    color: #FAF6EF;
+    border: none;
+    padding: 0.9rem 1.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    font-family: var(--font-body--family);
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+  .pf-newsletter-cta__submit:hover { background: #A67550; }
+  .pf-newsletter-cta__privacy {
+    font-size: 0.78rem;
+    color: {{ section.settings.text_color }};
+    opacity: 0.7;
+    margin: 0;
+  }
+  @media (max-width: 480px) {
+    .pf-newsletter-cta__form { flex-direction: column; }
+    .pf-newsletter-cta__submit { padding: 0.9rem; }
+  }
+</style>
+
+<section class="pf-newsletter-cta">
+  <div class="pf-newsletter-cta__inner">
+    {% if eyebrow != blank %}<p class="pf-newsletter-cta__eyebrow">{{ eyebrow }}</p>{% endif %}
+    {% if heading != blank %}<h2 class="pf-newsletter-cta__heading">{{ heading }}</h2>{% endif %}
+    {% if subheading != blank %}<p class="pf-newsletter-cta__subheading">{{ subheading }}</p>{% endif %}
+
+    {% form 'customer', id: 'newsletter-cta-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="pf-newsletter-cta__form">
+        <input
+          class="pf-newsletter-cta__input"
+          type="email"
+          name="contact[email]"
+          placeholder="{{ placeholder }}"
+          required
+          autocomplete="email"
+        >
+        <button class="pf-newsletter-cta__submit" type="submit">{{ button_label }}</button>
+      </div>
+    {% endform %}
+
+    {% if privacy_text != blank %}<p class="pf-newsletter-cta__privacy">{{ privacy_text }}</p>{% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter CTA",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "English"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow (EN)",
+      "default": "Stay Connected"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading (EN)",
+      "default": "Their Love Never Fades"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading (EN)",
+      "default": "Subscribe for new arrivals, ceremony calendar reminders, and exclusive offers"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input Placeholder (EN)",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label (EN)",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "privacy_text",
+      "label": "Privacy Note (EN)",
+      "default": "We respect your privacy. Unsubscribe anytime."
+    },
+    {
+      "type": "header",
+      "content": "中文"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_zh",
+      "label": "眉标题（中文）",
+      "default": "订阅我们"
+    },
+    {
+      "type": "text",
+      "id": "heading_zh",
+      "label": "标题（中文）",
+      "default": "与毛孩子的爱，永不缺席"
+    },
+    {
+      "type": "text",
+      "id": "subheading_zh",
+      "label": "副标题（中文）",
+      "default": "订阅获取最新产品资讯、代烧日历提醒以及专属折扣优惠"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_zh",
+      "label": "输入框占位文字（中文）",
+      "default": "您的邮箱地址"
+    },
+    {
+      "type": "text",
+      "id": "button_label_zh",
+      "label": "按钮文字（中文）",
+      "default": "立即订阅"
+    },
+    {
+      "type": "text",
+      "id": "privacy_text_zh",
+      "label": "隐私说明（中文）",
+      "default": "我们不会向第三方分享您的信息。随时可以退订。"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#2B3D35"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent Color",
+      "default": "#C9956A"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#FAF6EF"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#E8D9C8"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0, "max": 120, "step": 8, "unit": "px",
+      "label": "Padding Top",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0, "max": 120, "step": 8, "unit": "px",
+      "label": "Padding Bottom",
+      "default": 96
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter CTA"
+    }
+  ]
+}
+{% endschema %}
